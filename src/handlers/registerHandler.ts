@@ -32,14 +32,14 @@ export async function registerHandler(ctx: Context) {
   } catch (e) {
     const error = e as Error;
     console.error(error);
-    return await ctx.reply(error.message + "\nObs: usuários isentos do RU não podem se cadastrar");
+    return await ctx.reply(error.message);
   }
 
   try {
     await AppDataSource.getRepository(User).save(user);
   } catch (e) {
     console.error(e);
-    return await ctx.api.editMessageText(id, message_id, "Houve um problema, tente novamente :(");
+    return await ctx.api.editMessageText(id, message_id, "Houve um problema, tente novamente :(\nObs: usuários isentos do RU não podem se cadastrar");
   }
 
   await ctx.api.editMessageText(id, message_id, `${user.name} você foi cadastrado com sucesso!`);
