@@ -1,0 +1,27 @@
+{
+  "name": "ru-telegram-bot",
+  "scripts": {
+    "dev": "tsc && node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/index.js",
+    "build": "tsc",
+    "start": "node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/index.js",
+    "deploy": "fly deploy --ha=false"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "grammy": "^1.18.1",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.6",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  }
+}
