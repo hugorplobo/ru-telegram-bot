@@ -1,9 +1,9 @@
 {
   "name": "ru-telegram-bot",
   "scripts": {
-    "dev": "tsc && node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/index.js",
+    "dev": "tsc && node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/src/index.js",
     "build": "tsc",
-    "start": "node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/index.js",
+    "start": "node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/src/index.js",
     "deploy": "fly deploy",
     "test": "vitest"
   },
