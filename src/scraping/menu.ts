@@ -31,13 +31,14 @@ function getPartialMenu($: CheerioAPI, part: "almoco" | "jantar") {
 
     for (const value of values) {
       if (value.includes("(Contém Lactose)") || value.includes("(Contém Glúten)")) {
-        parsedValues += " " + value.replace(/\(/gm, "\\(").replace(/\)/gm, "\\)");
+        parsedValues += " " + value.replace(/\(/gm, "\\(").replace(/\)/gm, "\\)").trim();
       } else {
-        parsedValues += ", " + value;
+        parsedValues += ", " + value.trim();
       }
     }
 
-    parsedValues = parsedValues.slice(1);
+    parsedValues = parsedValues.replace(/^\,?\s/gm, "");
+
     cells.set(title.text(), parsedValues);
   });
 
