@@ -4,7 +4,7 @@
     "dev": "tsc && node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/index.js",
     "build": "tsc",
     "start": "node --tls-cipher-list='DEFAULT@SECLEVEL=0' build/index.js",
-    "deploy": "fly deploy --ha=false",
+    "deploy": "fly deploy",
     "test": "vitest"
   },
   "peerDependencies": {
