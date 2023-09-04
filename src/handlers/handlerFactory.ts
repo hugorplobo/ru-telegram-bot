@@ -5,6 +5,7 @@ import { unregisterHandler } from "./unregisterHandler";
 import { menuHandler } from "./menuHandler";
 import { startHandler } from "./startHandler";
 import { feedbackHandler } from "./feedbackHandler";
+import { dailyHandler } from "./dailyHandler";
 
 export enum FactoryError {
   INVALID_COMMAND = "Comando inválido",
@@ -19,6 +20,7 @@ export function createHandler(msg: string): (ctx: Context) => Promise<unknown> {
     "/feedback": feedbackHandler,
     "/start": startHandler,
     "/ajuda": startHandler,
+    "/daily": dailyHandler,
   };
 
   const command = msg.split(" ")[0];
