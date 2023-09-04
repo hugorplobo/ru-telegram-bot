@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { scrapeMenu } from "../../src/scraping/menu";
+import { scrapeMenu } from "../../src/services/scraping/menu";
 
 const mockHtml = `<table class="refeicao almoco">
 <tbody class="listras">                <tr class="item">

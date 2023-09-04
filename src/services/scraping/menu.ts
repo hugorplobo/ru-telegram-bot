@@ -1,11 +1,22 @@
 import { CheerioAPI, load } from "cheerio";
 
-export function scrapeMenu(html: string) {
+interface Menu {
+  lunch: {
+    title: string,
+    data: Map<string, string>,
+  },
+  dinner: {
+    title: string,
+    data: Map<string, string>,
+  }
+};
+
+export function scrapeMenu(html: string): string[] {
   const $ = load(html);
   const lunch = getPartialMenu($, "almoco");
   const dinner = getPartialMenu($, "jantar");
 
-  return {
+  return parseMenu({
     lunch: {
       title: "Almoço",
       data: lunch,
@@ -14,10 +25,10 @@ export function scrapeMenu(html: string) {
       title: "Jantar",
       data: dinner,
     },
-  };
+  });
 }
 
-function getPartialMenu($: CheerioAPI, part: "almoco" | "jantar") {
+function getPartialMenu($: CheerioAPI, part: "almoco" | "jantar"): Map<string, string> {
   const partial = $(`table.${part} tr`);
   const cells = new Map<string, string>();
 
@@ -43,4 +54,20 @@ function getPartialMenu($: CheerioAPI, part: "almoco" | "jantar") {
   });
 
   return cells;
+}
+
+function parseMenu(menu: Menu): string[] {
+  const formattedTexts: string[] = [];
+
+  Object.values(menu).forEach(value => {
+    let string = `🍽 *${value.title}*: \n\n`;
+
+    for (const [type, meal] of value.data) {
+      string += `*${type}*: ${meal}\n`;
+    }
+
+    formattedTexts.push(string);
+  });
+
+  return formattedTexts;
 }

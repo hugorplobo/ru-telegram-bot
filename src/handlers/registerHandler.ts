@@ -1,7 +1,7 @@
 import { Context } from "grammy";
 import { User } from "../model/user";
 import { AppDataSource } from "../model/dataSource";
-import { getInfo } from "../services/user/api";
+import { getInfo } from "../services/api/user";
 
 export async function registerHandler(ctx: Context) {
   const regex = /^\/cadastrar \d{10} \d{6}$/;

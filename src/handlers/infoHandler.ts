@@ -1,7 +1,7 @@
 import { Context } from "grammy";
 import { AppDataSource } from "../model/dataSource";
 import { User } from "../model/user";
-import { getInfo } from "../services/user/api";
+import { getInfo } from "../services/api/user";
 
 export async function infoHandler(ctx: Context) {
   const id = ctx.from!.id.toString();

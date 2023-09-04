@@ -1,4 +1,4 @@
-import { scrapeMenu } from "../../scraping/menu";
+import { scrapeMenu } from "../scraping/menu";
 
 const url = "https://www.ufc.br/restaurante/cardapio/5-restaurante-universitario-de-quixada";
 

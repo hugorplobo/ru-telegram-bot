@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { scrapeUser } from "../../src/scraping/user";
+import { scrapeUser } from "../../src/services/scraping/user";
 
 const mockReturn = `<table class="formulario" width="55%">
 <caption>Dados para Gera&#231;&#227;o da Cobran&#231;a</caption>

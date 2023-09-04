@@ -1,5 +1,5 @@
 import { User } from "../../model/user";
-import { scrapeUser } from "../../scraping/user";
+import { scrapeUser } from "../scraping/user";
 
 const url = "https://si3.ufc.br/public//jsp/restaurante_universitario/consulta_comensal_ru.jsf";
 
