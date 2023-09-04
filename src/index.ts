@@ -3,7 +3,9 @@ import "dotenv/config";
 import { Bot, Context } from "grammy";
 import { AppDataSource } from "./model/dataSource";
 import { createHandler } from "./handlers/handlerFactory";
-import { getInfo } from "./services/menu/api";
+import { scheduleMenu } from "./services/schedule/schedule";
+
+export const bot = new Bot(process.env.TOKEN!);
 
 async function handleMessage(ctx:Context) {
   try {
@@ -20,7 +22,7 @@ async function handleMessage(ctx:Context) {
 
 async function bootstrap() {
   await AppDataSource.initialize();
-  const bot = new Bot(process.env.TOKEN!);
+  scheduleMenu();
 
   bot.on("message:text", async ctx => {
     handleMessage(ctx);
