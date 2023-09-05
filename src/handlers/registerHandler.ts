@@ -2,6 +2,7 @@ import { Context } from "grammy";
 import { User } from "../model/user";
 import { AppDataSource } from "../model/dataSource";
 import { getInfo } from "../services/api/user";
+import { Subscriber } from "../model/subscriber";
 
 export async function registerHandler(ctx: Context) {
   const regex = /^\/cadastrar \d{10} \d{6}$/;
@@ -15,6 +16,10 @@ export async function registerHandler(ctx: Context) {
 
   if (await AppDataSource.getRepository(User).findOneBy({ id: ctx.from!.id.toString() })) {
     return await ctx.reply("❌ Você já está cadastradado!\nUse /descadastrar para apagar sua conta");
+  }
+
+  if (await AppDataSource.getRepository(Subscriber).findOneBy({ id: ctx.from!.id.toString() })) {
+    return await ctx.reply("❌ Você está inscrito para receber os cardápios, provavelmente porque é isento!\nUse /unsubscribe para retirar a inscrição");
   }
 
   const [_command, cardNumber, enrollment] = msg.split(" ");
