@@ -8,7 +8,7 @@ export async function infoHandler(ctx: Context) {
   const user = await AppDataSource.getRepository(User).findOneBy({ id });
 
   if (user === null) {
-    return await ctx.reply("❌ Você ainda não está cadastrado\\!\nUse /cadastrar _\\<numero do cartao\\>_ _\\<matricula\\>_\nObs: Usuários isentos não podem usar esse comando :(", {
+    return await ctx.reply("❌ Você ainda não está cadastrado\\!\nUse /cadastrar _\\<numero do cartao\\>_ _\\<matricula\\>_\nObs: Usuários isentos não podem usar esse comando :\\(", {
       parse_mode: "MarkdownV2",
     });
   }
