@@ -27,26 +27,19 @@ export async function sendMenuForAllUsers() {
   }
 
   const productionReady = true;
+  
   if (productionReady) {
     const users = await AppDataSource.getRepository(User).find();
     const subs = await AppDataSource.getRepository(Subscriber).find();
 
     for (const user of users) {
-      const { credits } = await getInfo(user);
-
-      Promise.all(menu.map(meal => bot.api.sendMessage(Number(user.id), meal, { parse_mode: "MarkdownV2" })))
-        .then(() => {
-          if (credits > 2) {
-            bot.api.sendMessage(user.id, `💳 ${user.name} você tem ${credits} créditos!`);
-          } else {
-            bot.api.sendMessage(user.id, `⚠️ ${user.name} você tem apenas ${credits} crédito(s)! ⚠️\nMelhor recarregar para amanhã!`);
-          }
-        })
+      sendMessage(menu, user.id)
+        .then(() => sendInfo(user))
         .catch(e => console.error(e));
     }
 
     for (const sub of subs) {
-      Promise.all(menu.map(meal => bot.api.sendMessage(sub.id, meal, { parse_mode: "MarkdownV2" })))
+      sendMessage(menu, sub.id)
         .catch(e => console.error(e));
     }
   } else {
@@ -54,6 +47,22 @@ export async function sendMenuForAllUsers() {
       await bot.api.sendMessage(Number(process.env.FEEDBACK_ID!), meal, { parse_mode: "MarkdownV2" })
         .catch(e => console.error(e));
     }
+  }
+}
+
+async function sendMessage(menu: string[], id: string) {
+  for (const meal of menu) {
+    await bot.api.sendMessage(Number(id), meal, { parse_mode: "MarkdownV2" });
+  }
+}
+
+async function sendInfo(user: User) {
+  const { credits } = await getInfo(user);
+
+  if (credits > 2) {
+    bot.api.sendMessage(user.id, `💳 ${user.name} você tem ${credits} créditos!`);
+  } else {
+    bot.api.sendMessage(user.id, `⚠️ ${user.name} você tem apenas ${credits} crédito(s)! ⚠️\nMelhor recarregar para amanhã!`);
   }
 }
 
