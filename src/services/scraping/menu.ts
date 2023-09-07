@@ -60,13 +60,17 @@ function parseMenu(menu: Menu): string[] {
   const formattedTexts: string[] = [];
 
   Object.values(menu).forEach(value => {
-    let string = `🍽 *${value.title}*: \n\n`;
+    if (value.data.size > 0) {
+      let string = `🍽 *${value.title}*: \n\n`;
 
-    for (const [type, meal] of value.data) {
-      string += `*${type}*: ${meal}\n`;
+      for (const [type, meal] of value.data) {
+        string += `*${type}*: ${meal}\n`;
+      }
+
+      formattedTexts.push(string); 
+    } else {
+      formattedTexts.push(`Sem *${value.title} hoje!*`);
     }
-
-    formattedTexts.push(string);
   });
 
   return formattedTexts;

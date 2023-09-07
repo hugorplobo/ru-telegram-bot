@@ -7,6 +7,12 @@ export async function menuHandler(ctx: Context) {
   try {
     const menu = await menuManager.getMenu();
 
+    if (menu.length < 1) {
+      await ctx.reply("Sem cardápio cadastrado para hoje!");
+      await ctx.api.deleteMessage(chat_id, message_id);
+      return;
+    }
+
     for (const meal of menu) {
       await ctx.reply(meal, {
         parse_mode: "MarkdownV2",

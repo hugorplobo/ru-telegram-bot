@@ -22,7 +22,7 @@ export async function scheduleMenu() {
 export async function sendMenuForAllUsers() {
   const menu = await menuManager.getMenu();
 
-  if (menu.length < 2) {
+  if (menu.length < 1) {
     return;
   }
 
