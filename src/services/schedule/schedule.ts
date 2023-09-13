@@ -21,6 +21,8 @@ export async function scheduleMenu() {
 
 export async function sendMenuForAllUsers() {
   const menu = await menuManager.getMenu();
+  
+  console.log(menu);
 
   if (menu.length < 1 || menu[0].startsWith("Sem")) {
     return;
