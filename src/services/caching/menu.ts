@@ -16,10 +16,6 @@ class MenuManager {
       this.menu = await getInfo();
       this.lastUpdate = now;
     }
-
-    if (this.menu[0].startsWith("Sem") && this.menu[1].startsWith("Sem")) {
-      return [];
-    }
     
     return this.menu;
   }

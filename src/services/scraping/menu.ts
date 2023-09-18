@@ -68,8 +68,6 @@ function parseMenu(menu: Menu): string[] {
       }
 
       formattedTexts.push(string); 
-    } else {
-      formattedTexts.push(`Sem *${value.title} hoje!*`);
     }
   });
 

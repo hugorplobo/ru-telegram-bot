@@ -21,10 +21,9 @@ export async function scheduleMenu() {
 
 export async function sendMenuForAllUsers() {
   const menu = await menuManager.getMenu();
-  
   console.log(menu);
 
-  if (menu.length < 1 || menu[0].startsWith("Sem")) {
+  if (menu.length > 0 && menu[0].startsWith("Sem")) {
     return;
   }
 
@@ -53,18 +52,26 @@ export async function sendMenuForAllUsers() {
 }
 
 async function sendMessage(menu: string[], id: string) {
+  if (menu.length < 1) {
+    await bot.api.sendMessage(Number(id), "Nenhum cardápio foi cadastrado até o momento 😞\nCaso deseje, use /cardapio mais tarde para verificar se já foi publicado");
+  }
+
   for (const meal of menu) {
     await bot.api.sendMessage(Number(id), meal, { parse_mode: "MarkdownV2" });
   }
 }
 
 async function sendInfo(user: User) {
-  const { credits } = await getInfo(user);
+  try {
+    const { credits } = await getInfo(user);
 
-  if (credits > 2) {
-    bot.api.sendMessage(user.id, `💳 ${user.name} você tem ${credits} créditos!`);
-  } else {
-    bot.api.sendMessage(user.id, `⚠️ ${user.name} você tem apenas ${credits} crédito(s)! ⚠️\nMelhor recarregar para amanhã!`);
+    if (credits > 2) {
+      bot.api.sendMessage(user.id, `💳 ${user.name} você tem ${credits} créditos!`);
+    } else {
+      bot.api.sendMessage(user.id, `⚠️ ${user.name} você tem apenas ${credits} crédito(s)! ⚠️\nMelhor recarregar para amanhã!`);
+    }
+  } catch (_) {
+    bot.api.sendMessage(user.id, `❌ Houve um erro ao verificar os seus créditos, use /info caso seja necessário!`);
   }
 }
 
