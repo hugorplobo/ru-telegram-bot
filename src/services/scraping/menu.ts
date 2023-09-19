@@ -44,7 +44,7 @@ function getPartialMenu($: CheerioAPI, part: "almoco" | "jantar"): Map<string, s
       if (value.includes("(Contém Lactose)") || value.includes("(Contém Glúten)")) {
         parsedValues += " " + value.replace(/\(/gm, "\\(").replace(/\)/gm, "\\)").trim();
       } else {
-        parsedValues += ", " + value.trim();
+        parsedValues += ", " + value.replace(/\(/gm, "\\(").replace(/\)/gm, "\\)").trim();
       }
     }
 
