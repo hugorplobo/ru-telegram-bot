@@ -7,14 +7,14 @@ import { scheduleMenu } from "./services/schedule/schedule";
 
 export const bot = new Bot(process.env.TOKEN!);
 
-async function handleMessage(ctx:Context) {
+async function handleMessage(ctx: Context) {
   try {
-    const handler = createHandler(ctx.message!.text!);
+    const handler = createHandler(ctx);
     await handler(ctx);
   } catch (e) {
     const error = e as Error;
     console.error(error);
-    
+
     ctx.reply(error.message)
       .catch(err => console.error(err));
   }
@@ -24,7 +24,7 @@ async function bootstrap() {
   await AppDataSource.initialize();
   scheduleMenu();
 
-  bot.on("message:text", async ctx => {
+  bot.on("message", async ctx => {
     handleMessage(ctx);
   });
 

@@ -8,12 +8,15 @@ import { feedbackHandler } from "./feedbackHandler";
 import { dailyHandler } from "./dailyHandler";
 import { subscribeHandler } from "./subscribeHandler";
 import { unsubscribeHandler } from "./unsubscribeHandler";
+import { forwardHandler } from "./forwardHandler";
 
 export enum FactoryError {
   INVALID_COMMAND = "Comando inválido",
-};
+}
 
-export function createHandler(msg: string): (ctx: Context) => Promise<unknown> {
+type Handler = (ctx: Context) => Promise<unknown>;
+
+export function createHandler(ctx: Context): Handler {
   const handlers = {
     "/cadastrar": registerHandler,
     "/info": infoHandler,
@@ -27,10 +30,12 @@ export function createHandler(msg: string): (ctx: Context) => Promise<unknown> {
     "/unsubscribe": unsubscribeHandler,
   };
 
-  const command = msg.split(" ")[0];
+  const command = ctx.msg?.text?.split(" ")[0];
 
-  if (command in handlers) {
+  if (command && command in handlers) {
     return handlers[command as keyof typeof handlers];
+  } else if (`${ctx.from?.id}` === process.env.FEEDBACK_ID!) {
+    return forwardHandler;
   }
 
   throw new Error(FactoryError.INVALID_COMMAND);
