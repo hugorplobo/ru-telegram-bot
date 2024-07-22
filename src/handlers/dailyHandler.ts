@@ -1,5 +1,5 @@
 import { Context } from "grammy";
-import { sendMenuForAllUsers } from "../services/schedule/schedule";
+import { sendMenuForAllUsers } from "../services/schedule/scheduleMenu";
 
 export async function dailyHandler(ctx: Context) {
   if (ctx.from!.id.toString() !== process.env.FEEDBACK_ID!) {

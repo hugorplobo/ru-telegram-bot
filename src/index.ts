@@ -3,7 +3,8 @@ import "dotenv/config";
 import { Bot, Context } from "grammy";
 import { AppDataSource } from "./model/dataSource";
 import { createHandler } from "./handlers/handlerFactory";
-import { scheduleMenu } from "./services/schedule/schedule";
+import { scheduleMenu } from "./services/schedule/scheduleMenu";
+import { scheduleReminder } from "./services/schedule/scheduleReminder";
 
 export const bot = new Bot(process.env.TOKEN!);
 
@@ -22,7 +23,9 @@ async function handleMessage(ctx: Context) {
 
 async function bootstrap() {
   await AppDataSource.initialize();
+
   scheduleMenu();
+  scheduleReminder();
 
   bot.on("message", async ctx => {
     handleMessage(ctx);

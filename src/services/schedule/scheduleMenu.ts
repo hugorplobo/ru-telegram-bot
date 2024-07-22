@@ -10,11 +10,11 @@ export async function scheduleMenu() {
   while (true) {
     const { trigger, millis } = getNextTrigger();
 
-    console.log(`Novo agendamento para: ${trigger.toDate().toLocaleString()}`);
+    console.log(`Novo agendamento de cardápio para: ${trigger.toDate().toLocaleString()}`);
 
     await new Promise(resolve => setTimeout(resolve, millis));
 
-    console.log("Disparando mensagens!");
+    console.log("Disparando cardápios!");
     sendMenuForAllUsers();
   }
 }
@@ -28,7 +28,7 @@ export async function sendMenuForAllUsers() {
   }
 
   const productionReady = true;
-  
+
   if (productionReady) {
     const users = await AppDataSource.getRepository(User).find();
     const subs = await AppDataSource.getRepository(Subscriber).find();
