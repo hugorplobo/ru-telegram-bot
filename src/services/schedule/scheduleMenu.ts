@@ -32,14 +32,24 @@ export async function sendMenuForAllUsers() {
   if (productionReady) {
     const users = await AppDataSource.getRepository(User).find();
     const subs = await AppDataSource.getRepository(Subscriber).find();
+    const today = new Date().toDateString();
 
     for (const user of users) {
+      if (user.lastMenu === today) {
+        sendInfo(user);
+        continue;
+      }
+
       sendMessage(menu, user.id)
         .then(() => sendInfo(user))
         .catch(e => console.error(e));
     }
 
     for (const sub of subs) {
+      if (sub.lastMenu === today) {
+        continue;
+      }
+
       sendMessage(menu, sub.id)
         .catch(e => console.error(e));
     }
@@ -54,6 +64,7 @@ export async function sendMenuForAllUsers() {
 async function sendMessage(menu: string[], id: string) {
   if (menu.length < 1) {
     await bot.api.sendMessage(Number(id), "Nenhum cardápio foi cadastrado até o momento 😞\nCaso deseje, use /cardapio mais tarde para verificar se já foi publicado");
+    return;
   }
 
   for (const meal of menu) {

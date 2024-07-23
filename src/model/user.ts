@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class User {
+
   @PrimaryColumn("text")
   id: string;
 
@@ -13,4 +14,8 @@ export class User {
 
   @Column("text")
   enrollment: string;
+
+  @Column("text", { nullable: true })
+  lastMenu: string;
+
 }

@@ -1,5 +1,8 @@
 import { Context } from "grammy";
 import { menuManager } from "../services/caching/menu";
+import { AppDataSource } from "../model/dataSource";
+import { User } from "../model/user";
+import { Subscriber } from "../model/subscriber";
 
 export async function menuHandler(ctx: Context) {
   const { chat: { id: chat_id }, message_id } = await ctx.reply("⌛️ Um momento...");
@@ -20,6 +23,24 @@ export async function menuHandler(ctx: Context) {
     }
 
     await ctx.api.deleteMessage(chat_id, message_id);
+    
+    const user = await AppDataSource.getRepository(User).findOneBy({
+      id: ctx.from?.id.toString(),
+    });
+
+    const sub = await AppDataSource.getRepository(Subscriber).findOneBy({
+      id: ctx.from?.id.toString(),
+    });
+
+    const today = new Date().toDateString();
+
+    if (user !== null) {
+      user.lastMenu = today;
+      await AppDataSource.getRepository(User).save(user);
+    } else if (sub !== null) {
+      sub.lastMenu = today;
+      await AppDataSource.getRepository(Subscriber).save(sub);
+    }
   } catch (e) {
     const error = e as Error;
     console.error(error);
