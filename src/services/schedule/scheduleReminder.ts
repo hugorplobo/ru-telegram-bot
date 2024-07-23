@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
 import { AppDataSource } from "../../model/dataSource";
 import { User } from "../../model/user";
 import { Subscriber } from "../../model/subscriber";
@@ -40,6 +39,7 @@ function getNextTrigger() {
   const now = dayjs();
   const timeZoneOffset = 3;
   let trigger = now
+    .add(1, "day")
     .hour(20 + timeZoneOffset)
     .minute(0)
     .second(0);

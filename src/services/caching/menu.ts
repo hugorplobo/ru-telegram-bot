@@ -17,7 +17,7 @@ class MenuManager {
       this.lastUpdate = now;
     }
     
-    return this.menu;
+    return this.menu.map(meal => meal.replace("-", "\\-"));
   }
 }
 
