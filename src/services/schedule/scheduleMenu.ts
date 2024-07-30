@@ -89,7 +89,7 @@ async function sendInfo(user: User) {
 function getNextTrigger() {
   const now = dayjs();
   const timeZoneOffset = 3;
-  const trigger = now.add(1, "day").hour(10 + timeZoneOffset).minute(0).second(0);
+  const trigger = now.add(1, "day").hour(8 + timeZoneOffset).minute(0).second(0);
   const diffMilliseconds = trigger.diff(now);
 
   return {

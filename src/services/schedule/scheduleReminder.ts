@@ -24,7 +24,7 @@ async function sendReminderForAllUsers() {
     ...await AppDataSource.getRepository(Subscriber).find(),
   ];
 
-  const productionReady = false;
+  const productionReady = true;
 
   if (productionReady) {
     for (const user of usersAndSubs) {
