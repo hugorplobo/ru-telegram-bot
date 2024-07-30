@@ -8,11 +8,11 @@ export async function scheduleReminder() {
   while (true) {
     const { trigger, millis } = getNextTrigger();
 
-    console.log(`Novo agendamento de cardápio para: ${trigger.toDate().toLocaleString()}`);
+    console.log(`Novo agendamento de lembrete para: ${trigger.toDate().toLocaleString()}`);
 
     await new Promise(resolve => setTimeout(resolve, millis));
 
-    console.log("Disparando notificações!");
+    console.log("Disparando lembretes!");
     sendReminderForAllUsers();
   }
 }
